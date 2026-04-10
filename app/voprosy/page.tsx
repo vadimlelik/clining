@@ -5,7 +5,7 @@ export function generateMetadata(): Metadata {
   return {
     title: "Вопросы и ответы",
     description: "Ответы на частые вопросы о клининге: сроки, цены, инвентарь, оформление заказов.",
-    keywords: ["частые вопросы клининг", "faq уборка", "вопросы клининговая компания"],
+    keywords: ["частые вопросы химчистка", "faq химчистка мебели", "вопросы химчистка минск"],
     alternates: { canonical: getCanonical("/voprosy") },
     openGraph: { title: "FAQ - CleanPro", description: "Частые вопросы клиентов о клининговых услугах.", url: getCanonical("/voprosy") },
   };

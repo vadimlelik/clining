@@ -4,8 +4,8 @@ import { getCanonical, testimonials } from "@/lib/site";
 export function generateMetadata(): Metadata {
   return {
     title: "Отзывы",
-    description: "Реальные отзывы клиентов CleanPro об уборке квартир, офисов и уборке после ремонта.",
-    keywords: ["отзывы клининг", "клининговая компания отзывы", "уборка отзывы"],
+    description: "Реальные отзывы клиентов CleanPro о химчистке диванов, матрасов, ковров и кожаной мебели в Минске.",
+    keywords: ["отзывы химчистка мебели", "химчистка дивана отзывы", "Минск химчистка отзывы"],
     alternates: { canonical: getCanonical("/otzivi") },
     openGraph: { title: "Отзывы клиентов - CleanPro", description: "Оценки и кейсы наших клиентов.", url: getCanonical("/otzivi") },
   };

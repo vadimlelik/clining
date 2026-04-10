@@ -10,12 +10,12 @@ const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: { default: "CleanPro - клининговая компания в Москве", template: "%s | CleanPro" },
-  description: "Профессиональная уборка квартир и офисов в Москве. Быстрый выезд, фиксированные цены, гарантированный результат.",
+  title: { default: "CleanPro - химчистка мебели в Минске", template: "%s | CleanPro" },
+  description: "Профессиональная химчистка диванов, матрасов, ковров и кресел в Минске. Выезд в день обращения, фиксированные цены и гарантия качества.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "CleanPro - клининговая компания",
-    description: "Клининг для дома и бизнеса с официальным договором и гарантией качества.",
+    description: "Химчистка мягкой мебели и ковров в Минске с безопасной химией и гарантией результата.",
     url: siteConfig.url,
     siteName: siteConfig.name,
     locale: "ru_RU",

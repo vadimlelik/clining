@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: service.title,
     description: service.shortDescription,
-    keywords: [service.title, "клининг", "уборка Москва"],
+    keywords: [service.title, "химчистка мебели", "Минск"],
     alternates: { canonical: getCanonical(`/uslugi/${service.slug}`) },
     openGraph: { title: `${service.title} - CleanPro`, description: service.shortDescription, url: getCanonical(`/uslugi/${service.slug}`) },
   };

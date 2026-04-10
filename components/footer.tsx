@@ -6,7 +6,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-3 md:px-6">
         <div>
           <h3 className="text-lg font-bold text-sky-700">{siteConfig.name}</h3>
-          <p className="mt-2 text-sm text-slate-600">Профессиональный клининг для квартир и офисов.</p>
+          <p className="mt-2 text-sm text-slate-600">Профессиональная химчистка мягкой мебели и ковров в Минске.</p>
         </div>
         <div>
           <p className="text-sm font-semibold text-slate-900">Контакты</p>
