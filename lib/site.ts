@@ -1,6 +1,12 @@
+/** Базовый URL сайта. В Vercel задай NEXT_PUBLIC_SITE_URL=https://cvirko-vadim.ru — иначе sitemap/robots могут указывать на неверный домен. */
+export function getSiteUrl(): string {
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (fromEnv) return fromEnv.replace(/\/$/, "");
+  return "https://cvirko-vadim.ru";
+}
+
 export const siteConfig = {
   name: "CleanPro",
-  url: "https://cvirko-vadim.ru",
   phone: "+375 (29) 000-00-00",
   email: "info@cvirko-vadim.ru",
   address: "Минск",
@@ -240,5 +246,5 @@ export const blogPosts = [
 ];
 
 export function getCanonical(path: string): string {
-  return `${siteConfig.url}${path}`;
+  return `${getSiteUrl()}${path}`;
 }

@@ -26,6 +26,12 @@ CRM_WEBHOOK_URL=https://your-crm.example/webhook/lead
 
 ## Продакшен
 
+В Vercel добавь переменную (чтобы `sitemap.xml` и `robots.txt` указывали на твой домен, а не на заглушку):
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://cvirko-vadim.ru
+```
+
 ```bash
 npm run build
 npm run start

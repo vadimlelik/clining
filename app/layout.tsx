@@ -3,20 +3,20 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { siteConfig } from "@/lib/site";
+import { getSiteUrl, siteConfig } from "@/lib/site";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL(getSiteUrl()),
   title: { default: "CleanPro - химчистка мебели в Минске", template: "%s | CleanPro" },
   description: "Профессиональная химчистка диванов, матрасов, ковров и кресел в Минске. Выезд в день обращения, фиксированные цены и гарантия качества.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "CleanPro - клининговая компания",
     description: "Химчистка мягкой мебели и ковров в Минске с безопасной химией и гарантией результата.",
-    url: siteConfig.url,
+    url: getSiteUrl(),
     siteName: siteConfig.name,
     locale: "ru_RU",
     type: "website",

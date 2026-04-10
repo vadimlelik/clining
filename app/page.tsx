@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CostCalculator } from "@/components/cost-calculator";
 import { ReviewsCarousel } from "@/components/reviews-carousel";
 import { LeadForm } from "@/components/lead-form";
-import { faqItems, getCanonical, services, siteConfig } from "@/lib/site";
+import { faqItems, getCanonical, getSiteUrl, services, siteConfig } from "@/lib/site";
 
 export function generateMetadata(): Metadata {
   return {
@@ -26,7 +26,7 @@ export default function HomePage() {
     address: { "@type": "PostalAddress", streetAddress: siteConfig.address, addressLocality: siteConfig.region, addressCountry: "BY" },
     openingHours: "Mo-Su 08:00-22:00",
     priceRange: "от 5 BYN",
-    url: siteConfig.url,
+    url: getSiteUrl(),
   };
 
   const faqSchema = {
