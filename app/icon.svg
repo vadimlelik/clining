@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CleanPro icon">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#g)" />
+  <path d="M20 34c0-7.18 5.82-13 13-13 4.1 0 7.76 1.9 10.14 4.88l-4.01 3.08A8 8 0 0 0 33 26c-4.42 0-8 3.58-8 8s3.58 8 8 8c3.12 0 5.83-1.79 7.15-4.4l4.6 2.3A13 13 0 1 1 20 34Z" fill="#fff" />
+</svg>

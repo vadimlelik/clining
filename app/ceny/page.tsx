@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getCanonical, services } from "@/lib/site";
 
 export function generateMetadata(): Metadata {
@@ -8,6 +9,7 @@ export function generateMetadata(): Metadata {
     keywords: ["цены на химчистку минск", "химчистка мебели цена", "химчистка дивана минск"],
     alternates: { canonical: getCanonical("/ceny") },
     openGraph: { title: "Цены на клининг - CleanPro", description: "Фиксированный прайс без скрытых доплат.", url: getCanonical("/ceny") },
+    robots: { index: true, follow: true },
   };
 }
 
@@ -26,6 +28,20 @@ export default function PricesPage() {
           </tbody>
         </table>
       </div>
+      <section className="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+        <h2 className="text-xl font-bold text-slate-900">Куда перейти дальше</h2>
+        <div className="mt-3 flex flex-wrap gap-3 text-sm font-semibold">
+          <Link href="/uslugi" className="text-sky-700 hover:text-sky-800">
+            Подробное описание услуг
+          </Link>
+          <Link href="/voprosy" className="text-sky-700 hover:text-sky-800">
+            Частые вопросы
+          </Link>
+          <Link href="/kontakty" className="text-sky-700 hover:text-sky-800">
+            Оставить заявку
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

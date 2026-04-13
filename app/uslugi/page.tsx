@@ -9,6 +9,7 @@ export function generateMetadata(): Metadata {
     keywords: ["услуги химчистки минск", "химчистка диванов", "химчистка мебели"],
     alternates: { canonical: getCanonical("/uslugi") },
     openGraph: { title: "Услуги CleanPro", description: "Подберите нужную услугу химчистки с фиксированными ценами.", url: getCanonical("/uslugi") },
+    robots: { index: true, follow: true },
   };
 }
 
@@ -27,6 +28,20 @@ export default function ServicesPage() {
           </article>
         ))}
       </div>
+      <section className="mt-12 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+        <h2 className="text-xl font-bold text-slate-900">Смотрите также</h2>
+        <div className="mt-3 flex flex-wrap gap-3 text-sm font-semibold">
+          <Link href="/ceny" className="text-sky-700 hover:text-sky-800">
+            Таблица цен
+          </Link>
+          <Link href="/otzivi" className="text-sky-700 hover:text-sky-800">
+            Отзывы клиентов
+          </Link>
+          <Link href="/blog" className="text-sky-700 hover:text-sky-800">
+            Советы в блоге
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

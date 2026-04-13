@@ -11,6 +11,7 @@ export function generateMetadata(): Metadata {
     keywords: ["блог клининг", "советы по уборке", "клининг статьи"],
     alternates: { canonical: getCanonical("/blog") },
     openGraph: { title: "Блог CleanPro", description: "Практические материалы по клинингу для дома и бизнеса.", url: getCanonical("/blog") },
+    robots: { index: true, follow: true },
   };
 }
 
@@ -28,6 +29,20 @@ export default function BlogPage() {
           </article>
         ))}
       </div>
+      <section className="mt-12 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+        <h2 className="text-xl font-bold text-slate-900">Полезные разделы</h2>
+        <div className="mt-3 flex flex-wrap gap-3 text-sm font-semibold">
+          <Link href="/uslugi" className="text-sky-700 hover:text-sky-800">
+            Все услуги химчистки
+          </Link>
+          <Link href="/ceny" className="text-sky-700 hover:text-sky-800">
+            Актуальные цены
+          </Link>
+          <Link href="/kontakty" className="text-sky-700 hover:text-sky-800">
+            Контакты и заказ
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

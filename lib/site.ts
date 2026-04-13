@@ -23,6 +23,15 @@ export type ServiceItem = {
   includes: string[];
 };
 
+export type BlogPostItem = {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  content: string[];
+  relatedServiceSlugs: string[];
+};
+
 export const services: ServiceItem[] = [
   {
     slug: "divan-dvukhmestnyy",
@@ -209,12 +218,13 @@ export const faqItems = [
   },
 ];
 
-export const blogPosts = [
+export const blogPosts: BlogPostItem[] = [
   {
     slug: "kak-vybrat-kliningovuyu-kompaniyu",
     title: "Как выбрать клининговую компанию: 7 критериев",
     description: "Разбираем, как выбрать надежный клининг и не переплатить.",
     date: "2026-03-15",
+    relatedServiceSlugs: ["divan-dvukhmestnyy", "matras", "kover"],
     content: [
       "Проверьте, работает ли компания официально: договор, реквизиты, фиксированные условия.",
       "Уточните, какие средства используют. Для дома с детьми и животными важно выбирать безопасные составы.",
@@ -226,6 +236,7 @@ export const blogPosts = [
     title: "Сколько стоит химчистка дивана в Минске в 2026 году",
     description: "Разбираем, как формируется цена химчистки мягкой мебели без скрытых доплат.",
     date: "2026-03-28",
+    relatedServiceSlugs: ["divan-dvukhmestnyy", "divan-trekhmestnyy", "uglovoy-divan"],
     content: [
       "Основные факторы стоимости: тип мебели, размер, ткань и сложность пятен.",
       "Дополнительно может влиять срочность выезда и необходимость ускоренной сушки.",
@@ -237,6 +248,7 @@ export const blogPosts = [
     title: "Как убрать запах с дивана: рабочие методы без риска для ткани",
     description: "Что можно сделать самостоятельно и когда лучше вызывать профессиональную химчистку.",
     date: "2026-04-03",
+    relatedServiceSlugs: ["divan-trekhmestnyy", "uglovoy-divan", "sushka"],
     content: [
       "Не маскируйте запах ароматизаторами: сначала нужна нейтрализация причины запаха.",
       "Для сложных запахов животных лучше использовать профессиональные составы и экстракторную чистку.",
@@ -247,4 +259,14 @@ export const blogPosts = [
 
 export function getCanonical(path: string): string {
   return `${getSiteUrl()}${path}`;
+}
+
+export function getServicesBySlugs(slugs: string[]): ServiceItem[] {
+  return slugs
+    .map((slug) => services.find((service) => service.slug === slug))
+    .filter((service): service is ServiceItem => Boolean(service));
+}
+
+export function getRelatedPostsForService(serviceSlug: string, currentPostSlug?: string): BlogPostItem[] {
+  return blogPosts.filter((post) => post.relatedServiceSlugs.includes(serviceSlug) && post.slug !== currentPostSlug);
 }
