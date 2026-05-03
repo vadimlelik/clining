@@ -11,15 +11,37 @@ const inter = Inter({ subsets: ["latin", "cyrillic"] });
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: { default: "CleanPro - химчистка мебели в Минске", template: "%s | CleanPro" },
-  description: "Профессиональная химчистка диванов, матрасов, ковров и кресел в Минске. Выезд в день обращения, фиксированные цены и гарантия качества.",
+  description:
+    "Химчистка дивана и мягкой мебели в Минске: цена и стоимость с прозрачным прайсом. Чистка штор, матрасов, ковров. Выезд в день обращения, гарантия качества.",
   alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
-    title: "CleanPro - клининговая компания",
-    description: "Химчистка мягкой мебели и ковров в Минске с безопасной химией и гарантией результата.",
+    title: "CleanPro - химчистка мебели в Минске",
+    description:
+      "Химчистка дивана в Минске (цена от 50 BYN), чистка штор и мягкой мебели. Безопасная химия, фиксированная стоимость до выезда.",
     url: getSiteUrl(),
     siteName: siteConfig.name,
     locale: "ru_RU",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CleanPro - химчистка мебели в Минске",
+    description: "Профессиональная химчистка диванов, матрасов, ковров и кресел с выездом по Минску.",
+  },
+  other: {
+    "geo.region": "BY-HM",
+    "geo.placename": "Минск",
   },
 };
 

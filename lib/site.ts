@@ -1,16 +1,22 @@
-/** Базовый URL сайта. В Vercel задай NEXT_PUBLIC_SITE_URL=https://cvirko-vadim.ru — иначе sitemap/robots могут указывать на неверный домен. */
+/** Базовый URL сайта. Предпочтительно явно задавать NEXT_PUBLIC_SITE_URL в продакшене. */
 export function getSiteUrl(): string {
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (fromEnv) return fromEnv.replace(/\/$/, "");
-  return "https://cvirko-vadim.ru";
+  const vercelProductionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  if (vercelProductionUrl) return `https://${vercelProductionUrl.replace(/\/$/, "")}`;
+  const vercelPreviewUrl = process.env.VERCEL_URL?.trim();
+  if (vercelPreviewUrl) return `https://${vercelPreviewUrl.replace(/\/$/, "")}`;
+  return "http://localhost:3000";
 }
 
 export const siteConfig = {
   name: "CleanPro",
   phone: "+375 (29) 000-00-00",
   email: "info@cvirko-vadim.ru",
-  address: "Минск",
+  address: "Минск, Беларусь",
   region: "Минск",
+  country: "BY",
+  openingHours: "Mo-Su 08:00-22:00",
 };
 
 export type ServiceItem = {
@@ -23,6 +29,11 @@ export type ServiceItem = {
   includes: string[];
 };
 
+export type FaqItem = {
+  question: string;
+  answer: string;
+};
+
 export type BlogPostItem = {
   slug: string;
   title: string;
@@ -31,6 +42,21 @@ export type BlogPostItem = {
   content: string[];
   relatedServiceSlugs: string[];
 };
+
+export type DistrictItem = {
+  slug: string;
+  name: string;
+  summary: string;
+};
+
+/** Слуги по диванам / мягкой мебели — расширенные SEO-формулировки под запросы «химчистка дивана минск цена» и т.п. */
+export const SOFA_SERVICE_SLUGS = new Set([
+  "divan-dvukhmestnyy",
+  "divan-trekhmestnyy",
+  "uglovoy-divan",
+  "kozhanyy-divan",
+  "uglovoy-kozhanyy-divan",
+]);
 
 export const services: ServiceItem[] = [
   {
@@ -201,6 +227,21 @@ export const testimonials = [
 
 export const faqItems = [
   {
+    question: "Сколько стоит химчистка дивана в Минске?",
+    answer:
+      "Базовая стоимость зависит от типа дивана: двухместный — от 50 BYN, трёхместный — от 60 BYN, угловой — от 70 BYN, кожаные модели — от 70 BYN. Точную цену фиксируем после фото и короткого описания задачи; актуальный прайс — на странице «Цены» и в карточках услуг.",
+  },
+  {
+    question: "Чистка штор в Минске — какая цена?",
+    answer:
+      "Химчистка штор с выездом — от 15 BYN за м². Итог зависит от площади полотна, типа ткани и степени загрязнения; стоимость согласуем до начала работ.",
+  },
+  {
+    question: "Химчистка мягкой мебели в Минске — как формируются цены?",
+    answer:
+      "Учитываем размер изделия, материал обивки, наличие стойких пятен и запахов, необходимость ускоренной сушки. Называем цену до выезда и не повышаем её без вашего согласия.",
+  },
+  {
     question: "Сколько времени занимает химчистка мебели?",
     answer: "В среднем 1.5-3 часа, в зависимости от размера мебели и степени загрязнения.",
   },
@@ -217,6 +258,97 @@ export const faqItems = [
     answer: "Да, используем отдельные составы для нейтрализации запахов, включая сложные органические запахи.",
   },
 ];
+
+export function getServiceFaqItems(service: ServiceItem): FaqItem[] {
+  return [
+    {
+      question: `Сколько стоит ${service.title.toLowerCase()}?`,
+      answer: `Базовая стоимость — ${service.priceFrom}. Финальная цена зависит от материала обивки, площади и сложности загрязнений.`,
+    },
+    {
+      question: `Сколько времени занимает ${service.title.toLowerCase()}?`,
+      answer: `Ориентировочная длительность работы: ${service.duration}. Точное время подтверждаем после оценки мебели.`,
+    },
+    {
+      question: "Можно ли заказать выезд в день обращения по Минску?",
+      answer: "Да, при наличии свободного окна мастер может приехать в день обращения по Минску и ближайшим районам.",
+    },
+    {
+      question: "Безопасна ли химчистка для детей и домашних животных?",
+      answer: "Используем профессиональные сертифицированные составы и подбираем химию под конкретный тип ткани.",
+    },
+  ];
+}
+
+export function getServiceSeoContent(service: ServiceItem): { title: string; paragraphs: string[]; highlights: string[] } {
+  const baseParagraphs = [
+    `${service.title} востребована в Минске, когда нужно быстро убрать пятна, запахи и накопившуюся пыль без риска для обивки. Мы работаем на выезде, подбираем состав под тип ткани и сразу согласовываем стоимость до начала работ.`,
+    `Для запросов вроде «химчистка мебели Минск» и «химчистка мягкой мебели цены» важны прозрачные условия: понятный прайс, подтверждённые этапы обработки и прогноз по времени высыхания. В рамках услуги «${service.title}» вы получаете экстракторную чистку и рекомендации по уходу после обработки.`,
+  ];
+
+  if (SOFA_SERVICE_SLUGS.has(service.slug)) {
+    baseParagraphs.push(
+      `По запросам «химчистка дивана минск цена», «химчистка дивана цена» и «химчистка дивана стоимость» заказчики сравнивают не только цифры, но и фиксацию цены до выезда. Мы оцениваем задачу по фото, называем стоимость заранее и соблюдаем согласованный объём работ.`,
+    );
+  } else if (service.slug === "shtory") {
+    baseParagraphs.push(
+      `Отвечая на запрос «чистка штор минск», работаем на выезде: деликатно очищаем шторы и портьеры без необходимости снимать и везти полотна в химчистку — экономим время и сохраняем посадку ткани.`,
+    );
+  }
+
+  baseParagraphs.push(
+    `Если нужна срочная ${service.title.toLowerCase()} в Минске, оставьте заявку: подберём ближайшее время, оценим задачу по фото и предложим безопасный сценарий очистки под вашу обивку.`,
+  );
+
+  return {
+    title: `${service.title} в Минске`,
+    paragraphs: baseParagraphs,
+    highlights: [
+      `Цена: ${service.priceFrom}`,
+      `Срок выполнения: ${service.duration}`,
+      "Выезд по Минску и области",
+      "Фиксируем стоимость до начала работ",
+    ],
+  };
+}
+
+/** Meta title/description/keywords для страниц услуг (под высокочастотные запросы по ценам и Минску). */
+export function getServicePageSeo(service: ServiceItem): { title: string; description: string; keywords: string[] } {
+  const region = "Минск";
+  if (service.slug === "shtory") {
+    return {
+      title: `Чистка штор в ${region}е — цена ${service.priceFrom}`,
+      description: `Чистка штор в ${region}е с выездом: ${service.shortDescription} Стоимость ${service.priceFrom}, цена за м² согласуется до начала работ. Химчистка портьер без скрытых доплат.`,
+      keywords: [
+        "чистка штор минск",
+        "химчистка штор минск",
+        "цена чистки штор минск",
+        "химчистка штор цена",
+        "химчистка мебели минск",
+      ],
+    };
+  }
+  if (SOFA_SERVICE_SLUGS.has(service.slug)) {
+    return {
+      title: `${service.title} в ${region}е — цена ${service.priceFrom}`,
+      description: `Химчистка дивана в ${region}е: ${service.shortDescription} Цена ${service.priceFrom}, стоимость фиксируем до выезда. Прозрачные тарифы на химчистку мягкой мебели без скрытых доплат.`,
+      keywords: [
+        "химчистка дивана минск цена",
+        "химчистка диванов минск цены",
+        "химчистка дивана минск цены",
+        "химчистка дивана цена",
+        "химчистка дивана стоимость",
+        "химчистка мягкой мебели цены",
+        "химчистка мебели минск",
+      ],
+    };
+  }
+  return {
+    title: `${service.title} в ${region}е — от ${service.priceFrom.replace(/^от\s+/i, "")}`,
+    description: `${service.title} в ${region}е. ${service.shortDescription} Цена ${service.priceFrom}. Выезд мастера, прозрачная стоимость химчистки мягкой мебели.`,
+    keywords: ["химчистка мягкой мебели цены", "химчистка мебели минск", service.title],
+  };
+}
 
 export const blogPosts: BlogPostItem[] = [
   {
@@ -257,8 +389,26 @@ export const blogPosts: BlogPostItem[] = [
   },
 ];
 
+export const minskDistricts: DistrictItem[] = [
+  { slug: "frunzenskiy", name: "Фрунзенский район", summary: "Быстрый выезд по жилым кварталам и новостройкам." },
+  { slug: "moskovskiy", name: "Московский район", summary: "Химчистка диванов, матрасов и ковров с выездом в день обращения." },
+  { slug: "leninskiy", name: "Ленинский район", summary: "Локальная химчистка мебели на дому с фиксированной ценой." },
+  { slug: "zavodskoy", name: "Заводской район", summary: "Удаляем пятна и запахи с мебели в квартирах и офисах." },
+  { slug: "partizanskiy", name: "Партизанский район", summary: "Деликатная чистка мебели и текстиля без риска для обивки." },
+  { slug: "oktyabrskiy", name: "Октябрьский район", summary: "Профессиональная химчистка мягкой мебели с гарантией результата." },
+  { slug: "sovetskiy", name: "Советский район", summary: "Выездная химчистка для домов, квартир и арендной недвижимости." },
+  { slug: "pervomayskiy", name: "Первомайский район", summary: "Глубокая экстракторная чистка и ускоренная сушка по запросу." },
+  { slug: "tsentralnyy", name: "Центральный район", summary: "Оперативный выезд и аккуратная химчистка для мебели любого типа." },
+];
+
 export function getCanonical(path: string): string {
   return `${getSiteUrl()}${path}`;
+}
+
+export function getPriceFromNumber(priceFrom: string): number | null {
+  const match = priceFrom.match(/\d+(?:[.,]\d+)?/);
+  if (!match) return null;
+  return Number(match[0].replace(",", "."));
 }
 
 export function getServicesBySlugs(slugs: string[]): ServiceItem[] {
