@@ -8,39 +8,53 @@ import { faqItems, getCanonical, getPriceFromNumber, getSiteUrl, minskDistricts,
 
 export function generateMetadata(): Metadata {
   return {
-    title: "Химчистка дивана в Минске — цена | чистка штор, мягкой мебели",
+    title: "Выездная химчистка Минск и Минская область — химчистка на дому",
     description:
-      "Химчистка дивана в Минске: цена и стоимость с фиксацией до выезда. Чистка штор, мягкой мебели, матрасов и ковров. CleanPro — выезд, прозрачный прайс, безопасная химия.",
+      "Выездная химчистка мебели, ковров и мягкой мебели в Минске и Минской области. Химчистка на дому диванов, матрасов, ковровых покрытий и штор. Цены и отзывы на сайте; стоимость фиксируем до выезда.",
     keywords: [
+      "выездная химчистка",
+      "выездная химчистка мебели",
+      "выездная химчистка ковров",
+      "выездная химчистка мягкой мебели",
+      "выездная химчистка минск",
+      "выездная химчистка на дом",
+      "выездная химчистка мебели на дому",
+      "выездная химчистка мебели минск",
+      "выездная химчистка диванов",
+      "химчистка мебели на дому в минск выездной",
+      "химчистка ковров и мебели выездная химчистка",
+      "выездная химчистка цены",
+      "выездная химчистка отзывы",
+      "выездная химчистка матраса",
+      "выездная химчистка ковровых покрытий",
+      "химчистка на дому",
+      "выездная химчистка минская обл",
       "химчистка дивана минск цена",
-      "химчистка диванов минск цены",
-      "химчистка дивана минск цены",
-      "чистка штор минск",
       "химчистка мягкой мебели цены",
-      "химчистка дивана цена",
-      "химчистка дивана стоимость",
-      "химчистка мебели минск",
     ],
     alternates: { canonical: getCanonical("/") },
     openGraph: {
-      title: "CleanPro — химчистка дивана в Минске, чистка штор, цены",
+      title: "Выездная химчистка на дому — Минск и Минская область | CleanPro",
       description:
-        "Прозрачные цены на химчистку диванов, мягкой мебели и штор. Выезд в день обращения, стоимость фиксируем заранее.",
+        "Выездная химчистка мебели и ковров на дому в Минске и области: диваны, мягкая мебель, шторы, матрасы. Цены фиксируем заранее; отзывы — в разделе «Отзывы».",
       url: getCanonical("/"),
       images: [
         {
-          url: "/api/og?title=CleanPro&subtitle=Химчистка%20дивана%20и%20штор%20в%20Минске",
+          url: "/api/og?title=CleanPro&subtitle=Выездная%20химчистка%20на%20дому%20%E2%80%94%20Минск%20и%20область",
           width: 1200,
           height: 630,
-          alt: "CleanPro — химчистка мебели в Минске",
+          alt: "CleanPro — выездная химчистка на дому в Минске и Минской области",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "CleanPro — химчистка дивана в Минске, цены",
-      description: "Химчистка мягкой мебели и чистка штор: фиксированная цена до выезда, выезд в день обращения.",
-      images: ["/api/og?title=CleanPro&subtitle=Химчистка%20дивана%20и%20штор%20в%20Минске"],
+      title: "Выездная химчистка Минск и Минская область | CleanPro",
+      description:
+        "Выездная химчистка мебели и ковров: мягкая мебель, диваны, шторы. Цены до выезда, выезд в день обращения по Минску и области.",
+      images: [
+        "/api/og?title=CleanPro&subtitle=Выездная%20химчистка%20на%20дому%20%E2%80%94%20Минск%20и%20область",
+      ],
     },
   };
 }
@@ -50,10 +64,14 @@ export default function HomePage() {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "CleaningService"],
     name: siteConfig.name,
-    description: "Профессиональная химчистка мебели в Минске",
+    description:
+      "Выездная химчистка мебели и ковров на дому в Минске и Минской области: диваны, матрасы, ковровые покрытия, шторы и мягкая мебель. Химчистка с выездом мастера, фиксированная стоимость до начала работ.",
     telephone: siteConfig.phone,
     email: siteConfig.email,
-    areaServed: { "@type": "City", name: siteConfig.region },
+    areaServed: [
+      { "@type": "City", name: "Минск" },
+      { "@type": "AdministrativeArea", name: "Минская область" },
+    ],
     address: { "@type": "PostalAddress", streetAddress: siteConfig.address, addressLocality: siteConfig.region, addressCountry: siteConfig.country },
     openingHours: siteConfig.openingHours,
     priceRange: "от 5 BYN",
@@ -76,7 +94,7 @@ export default function HomePage() {
         "@type": "Service",
         name: service.title,
         description: service.shortDescription,
-        areaServed: "Минск",
+        areaServed: ["Минск", "Минская область"],
         provider: { "@type": "LocalBusiness", name: siteConfig.name },
         offers: {
           "@type": "Offer",
@@ -95,10 +113,17 @@ export default function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceCatalogSchema) }} />
 
       <section className="rounded-3xl bg-gradient-to-r from-sky-50 to-emerald-50 p-8 md:p-12">
-        <p className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-semibold text-sky-700">Химчистка мебели в Минске и области</p>
-        <h1 className="mt-4 max-w-3xl text-4xl font-extrabold leading-tight text-slate-900 md:text-5xl">Удаляем пятна и запахи с диванов, матрасов и ковров. Быстро, безопасно, с гарантией.</h1>
+        <p className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-semibold text-sky-700">
+          Выездная химчистка · Минск и Минская область
+        </p>
+        <h1 className="mt-4 max-w-3xl text-4xl font-extrabold leading-tight text-slate-900 md:text-5xl">
+          Удаляем пятна и запахи с диванов, матрасов и ковров. Быстро, безопасно, с гарантией.
+        </h1>
+        <p className="mt-3 max-w-2xl text-lg font-medium text-slate-800">
+          Химчистка на дому: мастер приезжает с оборудованием — без самовывоза и ожидания в цеху.
+        </p>
         <p className="mt-4 max-w-2xl text-slate-700">
-          Химчистка диванов и мягкой мебели в Минске с прозрачной{" "}
+          Выездная химчистка мебели, в том числе диванов и мягкой мебели в Минске и Минской области, с прозрачной{" "}
           <Link href="/ceny" className="font-semibold text-sky-800 underline decoration-sky-300 underline-offset-2 hover:text-sky-900">
             ценой
           </Link>
@@ -110,6 +135,34 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-6 md:p-8">
+        <h2 className="text-xl font-bold text-slate-900 md:text-2xl">Выездная химчистка Минск и Минская область</h2>
+        <p className="mt-3 text-slate-600">
+          Мы специализируемся на{" "}
+          <strong className="font-semibold text-slate-800">химчистке на дому</strong> и{" "}
+          <strong className="font-semibold text-slate-800">выездной химчистке мебели</strong>: диваны, кресла, матрасы — на месте, без везения в цех. Отдельно делаем{" "}
+          <strong className="font-semibold text-slate-800">выездную химчистку ковров</strong> и ковровых покрытий (паласы, крупные ковры). Удобный сценарий —{" "}
+          <strong className="font-semibold text-slate-800">химчистка ковров и мебели</strong> выездной бригадой в один визит. Работаем по Минску и{" "}
+          <strong className="font-semibold text-slate-800">Минской области</strong>; время и стоимость согласуем заранее. Актуальные{" "}
+          <Link href="/ceny" className="font-semibold text-sky-700 underline decoration-sky-200 underline-offset-2 hover:text-sky-800">
+            цены на выездную химчистку
+          </Link>{" "}
+          и{" "}
+          <Link href="/otzivi" className="font-semibold text-sky-700 underline decoration-sky-200 underline-offset-2 hover:text-sky-800">
+            отзывы
+          </Link>{" "}
+          — на сайте; по коврам и матрасам —{" "}
+          <Link href="/uslugi/kover" className="font-semibold text-sky-700 underline decoration-sky-200 underline-offset-2 hover:text-sky-800">
+            ковры
+          </Link>
+          ,{" "}
+          <Link href="/uslugi/matras" className="font-semibold text-sky-700 underline decoration-sky-200 underline-offset-2 hover:text-sky-800">
+            матрасы
+          </Link>
+          .
+        </p>
+      </section>
+
       <section className="mt-12 grid gap-4 md:grid-cols-3">
         {[{ value: "4 800+", label: "клиентов" }, { value: "9 лет", label: "на рынке" }, { value: "16 000+", label: "выполненных заказов" }].map((item) => (
           <article key={item.label} className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm"><p className="text-3xl font-extrabold text-sky-700">{item.value}</p><p className="mt-1 text-sm text-slate-600">{item.label}</p></article>
@@ -117,7 +170,9 @@ export default function HomePage() {
       </section>
 
       <section className="mt-12 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-        <h2 className="text-2xl font-bold text-slate-900 md:text-3xl">Цены: химчистка дивана в Минске, чистка штор и мягкой мебели</h2>
+        <h2 className="text-2xl font-bold text-slate-900 md:text-3xl">
+          Цены: выездная химчистка в Минске — диваны, ковры и мягкая мебель
+        </h2>
         <p className="mt-3 text-slate-600">
           Ниже — ориентиры по стоимости и ссылки на карточки услуг. Подробный прайс — на странице{" "}
           <Link href="/ceny" className="font-semibold text-sky-700 hover:text-sky-800">
