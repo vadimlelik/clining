@@ -2,7 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body { color: #0f172a; background: #ffffff; }
-a { color: inherit; text-decoration: none; }
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    color: #0f172a;
+    background-color: #f8fafc;
+    background-image: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(204, 251, 241, 0.35), transparent 55%);
+    background-attachment: fixed;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background-color: rgba(45, 212, 191, 0.35);
+    color: #134e4a;
+  }
+}
+
+@layer components {
+  .page-container {
+    @apply mx-auto max-w-6xl px-4 md:px-6;
+  }
+
+  .section-gap {
+    @apply mt-14 md:mt-16;
+  }
+
+  .card-surface {
+    @apply rounded-2xl border border-slate-200/80 bg-white shadow-card;
+  }
+
+  .card-surface-hover {
+    @apply card-surface transition duration-200 hover:border-brand-200 hover:shadow-soft;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700 hover:shadow-glow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-brand-300 hover:bg-brand-50 hover:text-brand-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500;
+  }
+
+  .badge-soft {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-brand-200/80 bg-white/90 px-3 py-1 text-xs font-semibold text-brand-800 shadow-sm backdrop-blur;
+  }
+
+  .input-field {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 shadow-sm transition placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-200;
+  }
+
+  .section-title {
+    @apply text-2xl font-extrabold tracking-tight text-slate-900 md:text-3xl;
+  }
+
+  .section-lead {
+    @apply mt-3 max-w-2xl text-slate-600 md:text-lg;
+  }
+}

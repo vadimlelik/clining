@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
@@ -8,7 +8,7 @@ import { SiteJsonLd } from "@/components/site-json-ld";
 import { getSiteUrl, siteConfig } from "@/lib/site";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const inter = Inter({ subsets: ["latin", "cyrillic"] });
+const manrope = Manrope({ subsets: ["latin", "cyrillic"], variable: "--font-manrope" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru">
-      <body className={`${inter.className} flex min-h-screen flex-col bg-white text-slate-900`}>
+      <body className={`${manrope.variable} font-sans antialiased flex min-h-screen flex-col text-slate-900`}>
         <SiteJsonLd />
         <Header />
         <main className="flex-1">{children}</main>

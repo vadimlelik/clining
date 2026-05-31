@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageHero } from "@/components/page-hero";
+import { ServiceCard } from "@/components/service-card";
 import { getCanonical, services } from "@/lib/site";
+import { siteImages } from "@/lib/site-images";
 
 export function generateMetadata(): Metadata {
   return {
@@ -26,32 +29,31 @@ export function generateMetadata(): Metadata {
 
 export default function ServicesPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 md:px-6">
-      <h1 className="text-4xl font-extrabold">Услуги выездной химчистки на дому</h1>
-      <p className="mt-3 max-w-3xl text-slate-600">
-        Выберите услугу: химчистка на дому в Минске и Минской области. У каждой позиции — отдельная страница с составом работ и ценой.
-      </p>
-      <div className="mt-8 grid gap-4 md:grid-cols-2">
+    <div className="page-container py-8 md:py-10">
+      <PageHero
+        badge="Услуги на дому"
+        title="Выездная химчистка мебели и ковров"
+        description="Выберите услугу — у каждой позиции отдельная страница с составом работ, сроками и ценой."
+        image={{ src: siteImages.services.sofa, alt: "Химчистка мягкой мебели на дому" }}
+      />
+
+      <div className="section-gap grid gap-4 sm:grid-cols-2">
         {services.map((service) => (
-          <article key={service.slug} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-xl font-semibold">{service.title}</h2>
-            <p className="mt-2 text-slate-600">{service.shortDescription}</p>
-            <p className="mt-3 text-sm font-semibold text-emerald-700">{service.priceFrom}</p>
-            <Link href={`/uslugi/${service.slug}`} className="mt-4 inline-block text-sm font-semibold text-sky-700">Перейти на страницу услуги →</Link>
-          </article>
+          <ServiceCard key={service.slug} service={service} />
         ))}
       </div>
-      <section className="mt-12 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+
+      <section className="section-gap card-surface bg-brand-50/40 p-6">
         <h2 className="text-xl font-bold text-slate-900">Смотрите также</h2>
-        <div className="mt-3 flex flex-wrap gap-3 text-sm font-semibold">
-          <Link href="/ceny" className="text-sky-700 hover:text-sky-800">
-            Таблица цен
+        <div className="mt-4 flex flex-wrap gap-3 text-sm font-semibold">
+          <Link href="/ceny" className="text-brand-700 hover:text-brand-800">
+            Таблица цен →
           </Link>
-          <Link href="/otzivi" className="text-sky-700 hover:text-sky-800">
-            Отзывы клиентов
+          <Link href="/#calculator" className="text-brand-700 hover:text-brand-800">
+            Калькулятор →
           </Link>
-          <Link href="/blog" className="text-sky-700 hover:text-sky-800">
-            Советы в блоге
+          <Link href="/otzivi" className="text-brand-700 hover:text-brand-800">
+            Отзывы →
           </Link>
         </div>
       </section>

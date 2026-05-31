@@ -28,7 +28,7 @@ export default function ReviewsPage() {
   const reviewSchema = getReviewsPageSchema();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 md:px-6">
+    <div className="page-container py-8 md:py-10">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
       <h1 className="text-4xl font-extrabold">Отзывы о выездной химчистке</h1>
       <p className="mt-3 text-slate-600">
@@ -43,7 +43,7 @@ export default function ReviewsPage() {
       </p>
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         {testimonials.map((item) => (
-          <article key={item.name} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <article key={item.name} className="card-surface-hover p-6">
             <p className="font-semibold">{item.name}</p>
             <p className="mt-1 text-sm text-slate-500">{item.role}</p>
             <p className="mt-2 text-amber-500">{"★".repeat(item.rating)}</p>
