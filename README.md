@@ -29,8 +29,12 @@ CRM_WEBHOOK_URL=https://your-crm.example/webhook/lead
 В Vercel обязательно добавь переменную (чтобы `sitemap.xml`, `robots.txt` и canonical всегда указывали на твой основной домен):
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://your-domain.by
+NEXT_PUBLIC_SITE_URL=https://www.chistkaminsk.ru
+NEXT_PUBLIC_CONTACT_PHONE=+375 (29) 123-45-67
+NEXT_PUBLIC_CONTACT_EMAIL=info@chistkaminsk.ru
 ```
+
+После публикации карточек в каталогах добавьте их URL в `siteConfig.sameAs` в `lib/site.ts` (Google, Яндекс, 2ГИС).
 
 ```bash
 npm run build

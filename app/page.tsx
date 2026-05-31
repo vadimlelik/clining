@@ -4,7 +4,8 @@ import { BeforeAfterSection } from "@/components/before-after-section";
 import { CostCalculator } from "@/components/cost-calculator";
 import { ReviewsCarousel } from "@/components/reviews-carousel";
 import { LeadForm } from "@/components/lead-form";
-import { faqItems, getCanonical, getPriceFromNumber, getSiteUrl, minskDistricts, services, siteConfig } from "@/lib/site";
+import { faqItems, getCanonical, minskDistricts, services, siteConfig } from "@/lib/site";
+import { getFaqSchema, getServiceCatalogSchema } from "@/lib/schema";
 
 export function generateMetadata(): Metadata {
   return {
@@ -60,55 +61,11 @@ export function generateMetadata(): Metadata {
 }
 
 export default function HomePage() {
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "CleaningService"],
-    name: siteConfig.name,
-    description:
-      "Выездная химчистка мебели и ковров на дому в Минске и Минской области: диваны, матрасы, ковровые покрытия, шторы и мягкая мебель. Химчистка с выездом мастера, фиксированная стоимость до начала работ.",
-    telephone: siteConfig.phone,
-    email: siteConfig.email,
-    areaServed: [
-      { "@type": "City", name: "Минск" },
-      { "@type": "AdministrativeArea", name: "Минская область" },
-    ],
-    address: { "@type": "PostalAddress", streetAddress: siteConfig.address, addressLocality: siteConfig.region, addressCountry: siteConfig.country },
-    openingHours: siteConfig.openingHours,
-    priceRange: "от 5 BYN",
-    url: getSiteUrl(),
-  };
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqItems.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })),
-  };
-
-  const serviceCatalogSchema = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    itemListElement: services.map((service, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "Service",
-        name: service.title,
-        description: service.shortDescription,
-        areaServed: ["Минск", "Минская область"],
-        provider: { "@type": "LocalBusiness", name: siteConfig.name },
-        offers: {
-          "@type": "Offer",
-          priceCurrency: "BYN",
-          ...(getPriceFromNumber(service.priceFrom) ? { price: getPriceFromNumber(service.priceFrom) } : {}),
-          url: `${getSiteUrl()}/uslugi/${service.slug}`,
-        },
-      },
-    })),
-  };
+  const faqSchema = getFaqSchema(faqItems);
+  const serviceCatalogSchema = getServiceCatalogSchema();
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 md:px-6">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceCatalogSchema) }} />
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { faqItems, getCanonical } from "@/lib/site";
+import { getFaqSchema } from "@/lib/schema";
 
 export function generateMetadata(): Metadata {
   return {
@@ -12,11 +13,7 @@ export function generateMetadata(): Metadata {
 }
 
 export default function FaqPage() {
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqItems.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })),
-  };
+  const faqSchema = getFaqSchema(faqItems);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 md:px-6">

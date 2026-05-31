@@ -8,10 +8,9 @@ import {
   getServiceFaqItems,
   getServicePageSeo,
   getServiceSeoContent,
-  getSiteUrl,
-  siteConfig,
   services,
 } from "@/lib/site";
+import { getBreadcrumbSchema, getFaqSchema, getLocalBusinessProviderRef } from "@/lib/schema";
 
 type Props = { params: { slug: string } };
 
@@ -56,31 +55,19 @@ export default async function ServiceDetailPage({ params }: Props) {
   const serviceFaqItems = getServiceFaqItems(service);
   const serviceSeoContent = getServiceSeoContent(service);
   const servicePrice = getPriceFromNumber(service.priceFrom);
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: getSiteUrl() },
-      { "@type": "ListItem", position: 2, name: "Услуги", item: getCanonical("/uslugi") },
-      { "@type": "ListItem", position: 3, name: service.title, item: serviceUrl },
-    ],
-  };
-  const serviceFaqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: serviceFaqItems.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  };
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Главная", item: getCanonical("/") },
+    { name: "Услуги", item: getCanonical("/uslugi") },
+    { name: service.title, item: serviceUrl },
+  ]);
+  const serviceFaqSchema = getFaqSchema(serviceFaqItems);
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
     name: service.title,
     description: service.fullDescription,
-    areaServed: { "@type": "City", name: siteConfig.region },
-    provider: { "@type": "LocalBusiness", name: siteConfig.name, url: getSiteUrl() },
+    areaServed: { "@type": "City", name: "Минск" },
+    provider: getLocalBusinessProviderRef(),
     offers: {
       "@type": "Offer",
       availability: "https://schema.org/InStock",

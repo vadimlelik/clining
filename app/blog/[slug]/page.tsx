@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { blogPosts, getCanonical, getServicesBySlugs, getSiteUrl } from "@/lib/site";
+import { blogPosts, getCanonical, getServicesBySlugs } from "@/lib/site";
+import { getArticleSchema, getBreadcrumbSchema } from "@/lib/schema";
 
 export const revalidate = 3600;
 
@@ -31,19 +32,22 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) notFound();
   const relatedServices = getServicesBySlugs(post.relatedServiceSlugs);
   const postUrl = getCanonical(`/blog/${post.slug}`);
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: getSiteUrl() },
-      { "@type": "ListItem", position: 2, name: "Блог", item: getCanonical("/blog") },
-      { "@type": "ListItem", position: 3, name: post.title, item: postUrl },
-    ],
-  };
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Главная", item: getCanonical("/") },
+    { name: "Блог", item: getCanonical("/blog") },
+    { name: post.title, item: postUrl },
+  ]);
+  const articleSchema = getArticleSchema({
+    title: post.title,
+    description: post.description,
+    date: post.date,
+    url: postUrl,
+  });
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-10 md:px-6">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <nav aria-label="breadcrumb" className="text-sm text-slate-500">
         <Link href="/" className="hover:text-sky-700">
           Главная
