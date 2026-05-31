@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { SiteImage } from "@/components/site-image";
 import { IconShield, IconSparkles, IconTruck } from "@/components/icons";
 import { siteImages } from "@/lib/site-images";
 
@@ -70,7 +70,7 @@ export function HomeHero() {
 
         <div className="relative mx-auto w-full max-w-lg lg:max-w-none">
           <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-glow ring-1 ring-brand-100/80 sm:aspect-[5/6]">
-            <Image
+            <SiteImage
               src={siteImages.hero.main}
               alt="Чистый диван в гостиной после химчистки"
               fill
@@ -86,7 +86,7 @@ export function HomeHero() {
 
           <div className="absolute -bottom-4 -left-2 z-10 hidden w-36 overflow-hidden rounded-2xl border-2 border-white shadow-lg sm:block md:-left-6 md:w-44">
             <div className="relative aspect-square">
-              <Image
+              <SiteImage
                 src={siteImages.hero.accent}
                 alt="Профессиональная обработка мебели"
                 fill
@@ -101,7 +101,7 @@ export function HomeHero() {
 
           <div className="absolute -right-2 -top-3 z-10 hidden w-32 overflow-hidden rounded-2xl border-2 border-white shadow-lg sm:block md:-right-4 md:w-40">
             <div className="relative aspect-[4/3]">
-              <Image
+              <SiteImage
                 src={siteImages.hero.cleanRoom}
                 alt="Светлая комната после уборки"
                 fill

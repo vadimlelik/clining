@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type { ReactNode } from "react";
+import { SiteImage } from "@/components/site-image";
 
 type Props = {
   badge?: string;
@@ -23,7 +23,7 @@ export function PageHero({ badge, title, description, image, children }: Props) 
         </div>
         {image ? (
           <div className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-soft ring-1 ring-brand-100 lg:aspect-[4/3]">
-            <Image src={image.src} alt={image.alt} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 420px" priority />
+            <SiteImage src={image.src} alt={image.alt} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 420px" priority />
           </div>
         ) : null}
       </div>

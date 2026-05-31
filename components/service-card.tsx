@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { SiteImage } from "@/components/site-image";
 import type { ServiceItem } from "@/lib/site";
 import { getServiceImage } from "@/lib/site-images";
 
@@ -11,7 +11,7 @@ export function ServiceCard({ service, compact }: Props) {
   return (
     <article className="group card-surface-hover flex h-full flex-col overflow-hidden">
       <div className="relative aspect-[16/10] overflow-hidden bg-brand-50">
-        <Image
+        <SiteImage
           src={image.src}
           alt={image.alt}
           fill

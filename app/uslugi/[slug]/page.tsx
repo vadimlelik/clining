@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { SiteImage } from "@/components/site-image";
 import { notFound } from "next/navigation";
 import { getServiceImage } from "@/lib/site-images";
 import {
@@ -97,7 +97,7 @@ export default async function ServiceDetailPage({ params }: Props) {
         / <span className="text-slate-700">{service.title}</span>
       </nav>
       <div className="relative mt-6 aspect-[21/9] min-h-[180px] overflow-hidden rounded-2xl shadow-card ring-1 ring-brand-100">
-        <Image src={cover.src} alt={cover.alt} fill className="object-cover" priority sizes="(max-width: 896px) 100vw, 896px" />
+        <SiteImage src={cover.src} alt={cover.alt} fill className="object-cover" priority sizes="(max-width: 896px) 100vw, 896px" />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/60 via-slate-900/25 to-transparent" />
         <div className="absolute bottom-0 left-0 p-6 md:p-8">
           <h1 className="text-3xl font-extrabold text-white md:text-4xl">{service.title}</h1>

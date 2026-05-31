@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SiteImage } from "@/components/site-image";
 import { siteImages } from "@/lib/site-images";
 
 export function VisualStrip() {
@@ -8,7 +8,7 @@ export function VisualStrip() {
         {siteImages.strip.map((item) => (
           <figure key={item.caption} className="group relative overflow-hidden rounded-2xl shadow-card">
             <div className="relative aspect-[4/3]">
-              <Image
+              <SiteImage
                 src={item.src}
                 alt={item.alt}
                 fill
