@@ -17,9 +17,7 @@ export function LeadForm() {
     try {
       const response = await fetch("/api/lead", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, phone, comment }),
       });
 
@@ -41,41 +39,33 @@ export function LeadForm() {
   }
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-      <h3 className="text-2xl font-bold text-slate-900">Оставьте заявку</h3>
-      <p className="mt-2 text-sm text-slate-600">Перезвоним в течение 10 минут и подберем удобное время.</p>
+    <div className="card-surface h-full p-6 md:p-8">
+      <h3 className="text-2xl font-extrabold text-slate-900">Оставьте заявку</h3>
+      <p className="mt-2 text-sm text-slate-600">Перезвоним в течение 10 минут и подберём удобное время выезда.</p>
       <form className="mt-5 grid gap-3" onSubmit={handleSubmit}>
-        <input
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Ваше имя"
-          className="rounded-xl border border-slate-300 p-3"
-        />
+        <input required value={name} onChange={(e) => setName(e.target.value)} placeholder="Ваше имя" className="input-field" />
         <input
           required
           type="tel"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="Телефон"
-          className="rounded-xl border border-slate-300 p-3"
+          className="input-field"
         />
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          placeholder="Комментарий"
-          className="min-h-24 rounded-xl border border-slate-300 p-3"
+          placeholder="Что нужно почистить? (диван, ковёр…)"
+          className="input-field min-h-24 resize-y"
         />
-        <button
-          className="rounded-xl bg-emerald-600 px-4 py-3 font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-emerald-400"
-          type="submit"
-          disabled={status === "loading"}
-        >
-          {status === "loading" ? "Отправляем..." : "Отправить заявку"}
+        <button type="submit" disabled={status === "loading"} className="btn-primary w-full disabled:opacity-60">
+          {status === "loading" ? "Отправляем…" : "Отправить заявку"}
         </button>
       </form>
-      {status === "success" && <p className="mt-3 text-sm text-emerald-700">Спасибо! Мы скоро с вами свяжемся.</p>}
-      {status === "error" && <p className="mt-3 text-sm text-red-600">{errorText}</p>}
+      {status === "success" ? (
+        <p className="mt-3 rounded-xl bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-800">Спасибо! Мы скоро свяжемся с вами.</p>
+      ) : null}
+      {status === "error" ? <p className="mt-3 text-sm text-red-600">{errorText}</p> : null}
     </div>
   );
 }

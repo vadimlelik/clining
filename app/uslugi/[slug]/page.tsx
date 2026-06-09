@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { SiteImage } from "@/components/site-image";
 import { notFound } from "next/navigation";
+import { getServiceImage } from "@/lib/site-images";
 import {
   getCanonical,
   getPriceFromNumber,
@@ -8,10 +10,9 @@ import {
   getServiceFaqItems,
   getServicePageSeo,
   getServiceSeoContent,
-  getSiteUrl,
-  siteConfig,
   services,
 } from "@/lib/site";
+import { getBreadcrumbSchema, getFaqSchema, getLocalBusinessProviderRef } from "@/lib/schema";
 
 type Props = { params: { slug: string } };
 
@@ -56,31 +57,20 @@ export default async function ServiceDetailPage({ params }: Props) {
   const serviceFaqItems = getServiceFaqItems(service);
   const serviceSeoContent = getServiceSeoContent(service);
   const servicePrice = getPriceFromNumber(service.priceFrom);
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: getSiteUrl() },
-      { "@type": "ListItem", position: 2, name: "Услуги", item: getCanonical("/uslugi") },
-      { "@type": "ListItem", position: 3, name: service.title, item: serviceUrl },
-    ],
-  };
-  const serviceFaqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: serviceFaqItems.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  };
+  const cover = getServiceImage(service.slug);
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Главная", item: getCanonical("/") },
+    { name: "Услуги", item: getCanonical("/uslugi") },
+    { name: service.title, item: serviceUrl },
+  ]);
+  const serviceFaqSchema = getFaqSchema(serviceFaqItems);
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
     name: service.title,
     description: service.fullDescription,
-    areaServed: { "@type": "City", name: siteConfig.region },
-    provider: { "@type": "LocalBusiness", name: siteConfig.name, url: getSiteUrl() },
+    areaServed: { "@type": "City", name: "Минск" },
+    provider: getLocalBusinessProviderRef(),
     offers: {
       "@type": "Offer",
       availability: "https://schema.org/InStock",
@@ -92,25 +82,33 @@ export default async function ServiceDetailPage({ params }: Props) {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 md:px-6">
+    <div className="page-container max-w-4xl py-8 md:py-10">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceFaqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       <nav aria-label="breadcrumb" className="text-sm text-slate-500">
-        <Link href="/" className="hover:text-sky-700">
+        <Link href="/" className="hover:text-brand-700">
           Главная
         </Link>{" "}
         /{" "}
-        <Link href="/uslugi" className="hover:text-sky-700">
+        <Link href="/uslugi" className="hover:text-brand-700">
           Услуги
         </Link>{" "}
         / <span className="text-slate-700">{service.title}</span>
       </nav>
-      <h1 className="text-4xl font-extrabold">{service.title}</h1>
+      <div className="relative mt-6 aspect-[21/9] min-h-[180px] overflow-hidden rounded-2xl shadow-card ring-1 ring-brand-100">
+        <SiteImage src={cover.src} alt={cover.alt} fill className="object-cover" priority sizes="(max-width: 896px) 100vw, 896px" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/60 via-slate-900/25 to-transparent" />
+        <div className="absolute bottom-0 left-0 p-6 md:p-8">
+          <h1 className="text-3xl font-extrabold text-white md:text-4xl">{service.title}</h1>
+          <p className="mt-2 max-w-xl text-sm text-white/90 md:text-base">{service.shortDescription}</p>
+        </div>
+      </div>
+      <h1 className="sr-only">{service.title}</h1>
       <p className="mt-3 text-slate-600">{service.fullDescription}</p>
       <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <article className="rounded-2xl bg-sky-50 p-5"><p className="text-sm text-slate-600">Стоимость</p><p className="text-2xl font-bold text-sky-700">{service.priceFrom}</p></article>
-        <article className="rounded-2xl bg-emerald-50 p-5"><p className="text-sm text-slate-600">Время выполнения</p><p className="text-2xl font-bold text-emerald-700">{service.duration}</p></article>
+        <article className="rounded-2xl bg-brand-50 p-5 ring-1 ring-brand-100"><p className="text-sm text-slate-600">Стоимость</p><p className="text-2xl font-bold text-brand-700">{service.priceFrom}</p></article>
+        <article className="rounded-2xl bg-emerald-50 p-5 ring-1 ring-emerald-100"><p className="text-sm text-slate-600">Время выполнения</p><p className="text-2xl font-bold text-emerald-700">{service.duration}</p></article>
       </div>
       <h2 className="mt-8 text-2xl font-bold">Что входит</h2>
       <ul className="mt-4 grid gap-3">
@@ -148,7 +146,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           <ul className="mt-4 grid gap-2">
             {relatedPosts.map((post) => (
               <li key={post.slug}>
-                <Link href={`/blog/${post.slug}`} className="font-semibold text-sky-700 hover:text-sky-800">
+                <Link href={`/blog/${post.slug}`} className="font-semibold text-brand-700 hover:text-brand-800">
                   {post.title}
                 </Link>
               </li>

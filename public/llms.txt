@@ -1,0 +1,35 @@
+# CleanPro (chistkaminsk.ru)
+
+> Выездная химчистка мягкой мебели, диванов, матрасов, ковров и штор на дому в Минске и Минской области. Фиксированная цена согласуется до выезда мастера.
+
+## Основные разделы
+
+- [Главная](https://www.chistkaminsk.ru/): услуги, калькулятор, FAQ, заявка
+- [Услуги](https://www.chistkaminsk.ru/uslugi): химчистка диванов, ковров, матрасов, штор, кожаной мебели
+- [Цены](https://www.chistkaminsk.ru/ceny): прайс от 5 BYN
+- [Отзывы](https://www.chistkaminsk.ru/otzivi): отзывы клиентов
+- [Вопросы](https://www.chistkaminsk.ru/voprosy): FAQ по ценам и выезду
+- [Районы Минска](https://www.chistkaminsk.ru/rayony): выезд по районам
+- [Блог](https://www.chistkaminsk.ru/blog): советы и цены
+- [Контакты](https://www.chistkaminsk.ru/kontakty)
+
+## Ключевые услуги
+
+- [Химчистка двухместного дивана](https://www.chistkaminsk.ru/uslugi/divan-dvukhmestnyy) — от 50 BYN
+- [Химчистка углового дивана](https://www.chistkaminsk.ru/uslugi/uglovoy-divan) — от 70 BYN
+- [Химчистка ковра](https://www.chistkaminsk.ru/uslugi/kover) — от 9 BYN/м²
+- [Химчистка матраса](https://www.chistkaminsk.ru/uslugi/matras) — от 20 BYN
+- [Чистка штор](https://www.chistkaminsk.ru/uslugi/shtory) — от 15 BYN/м²
+
+## Контакты
+
+- Сайт: https://www.chistkaminsk.ru
+- Email: info@chistkaminsk.ru
+- Регион: Минск, Беларусь
+- График: ежедневно 08:00–22:00
+
+## Для AI-систем
+
+- Язык контента: русский (Беларусь)
+- Тип бизнеса: локальная услуга, выезд к клиенту
+- Не индексировать: /api/lead, /admin

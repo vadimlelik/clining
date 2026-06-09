@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCanonical, getPriceFromNumber, getSiteUrl, minskDistricts, services, siteConfig } from "@/lib/site";
+import { getCanonical, getPriceFromNumber, minskDistricts, services } from "@/lib/site";
+import { getBreadcrumbSchema, getLocalBusinessProviderRef } from "@/lib/schema";
 
 type Props = { params: { slug: string } };
 
@@ -40,15 +41,11 @@ export default function DistrictDetailPage({ params }: Props) {
   if (!district) notFound();
 
   const districtUrl = getCanonical(`/rayony/${district.slug}`);
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Главная", item: getSiteUrl() },
-      { "@type": "ListItem", position: 2, name: "Районы", item: getCanonical("/rayony") },
-      { "@type": "ListItem", position: 3, name: district.name, item: districtUrl },
-    ],
-  };
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: "Главная", item: getCanonical("/") },
+    { name: "Районы", item: getCanonical("/rayony") },
+    { name: district.name, item: districtUrl },
+  ]);
   const districtItemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -63,7 +60,7 @@ export default function DistrictDetailPage({ params }: Props) {
           name: `${service.title} (${district.name})`,
           description: service.shortDescription,
           areaServed: { "@type": "AdministrativeArea", name: district.name },
-          provider: { "@type": "LocalBusiness", name: siteConfig.name, url: getSiteUrl() },
+          provider: getLocalBusinessProviderRef(),
           offers: {
             "@type": "Offer",
             priceCurrency: "BYN",

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PageHero } from "@/components/page-hero";
 import { getCanonical, services } from "@/lib/site";
+import { siteImages } from "@/lib/site-images";
 
 export function generateMetadata(): Metadata {
   return {
@@ -28,32 +30,50 @@ export function generateMetadata(): Metadata {
 
 export default function PricesPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 md:px-6">
-      <h1 className="text-4xl font-extrabold">Цены на выездную химчистку в Минске</h1>
-      <p className="mt-3 text-slate-600">
-        Прайс на химчистку мебели, ковров и матрасов на дому. Финальная стоимость зависит от материала, размера и сложности загрязнений. Базовые тарифы:
-      </p>
-      <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200">
-        <table className="w-full border-collapse bg-white text-left">
-          <thead className="bg-slate-50"><tr><th className="p-4">Услуга</th><th className="p-4">Цена</th><th className="p-4">Срок</th></tr></thead>
+    <div className="page-container py-8 md:py-10">
+      <PageHero
+        badge="Прозрачный прайс"
+        title="Цены на выездную химчистку в Минске"
+        description="Базовые тарифы на химчистку на дому. Итог зависит от ткани и загрязнений — фиксируем до выезда."
+        image={{ src: siteImages.services.carpet, alt: "Прайс на химчистку ковров и мебели" }}
+      />
+
+      <div className="section-gap overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
+        <table className="w-full border-collapse text-left text-sm md:text-base">
+          <thead className="bg-brand-50 text-brand-900">
+            <tr>
+              <th className="p-4 font-bold">Услуга</th>
+              <th className="p-4 font-bold">Цена</th>
+              <th className="hidden p-4 font-bold sm:table-cell">Срок</th>
+            </tr>
+          </thead>
           <tbody>
             {services.map((service) => (
-              <tr key={service.slug} className="border-t border-slate-200"><td className="p-4">{service.title}</td><td className="p-4 font-semibold text-emerald-700">{service.priceFrom}</td><td className="p-4">{service.duration}</td></tr>
+              <tr key={service.slug} className="border-t border-slate-100 transition hover:bg-brand-50/30">
+                <td className="p-4">
+                  <Link href={`/uslugi/${service.slug}`} className="font-medium text-slate-900 hover:text-brand-700">
+                    {service.title}
+                  </Link>
+                </td>
+                <td className="p-4 font-bold text-brand-700">{service.priceFrom}</td>
+                <td className="hidden p-4 text-slate-600 sm:table-cell">{service.duration}</td>
+              </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <section className="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+
+      <section className="section-gap card-surface bg-brand-50/30 p-6">
         <h2 className="text-xl font-bold text-slate-900">Куда перейти дальше</h2>
-        <div className="mt-3 flex flex-wrap gap-3 text-sm font-semibold">
-          <Link href="/uslugi" className="text-sky-700 hover:text-sky-800">
-            Подробное описание услуг
+        <div className="mt-4 flex flex-wrap gap-3 text-sm font-semibold">
+          <Link href="/#calculator" className="btn-primary">
+            Калькулятор
           </Link>
-          <Link href="/voprosy" className="text-sky-700 hover:text-sky-800">
-            Частые вопросы
+          <Link href="/uslugi" className="btn-secondary">
+            Услуги
           </Link>
-          <Link href="/kontakty" className="text-sky-700 hover:text-sky-800">
-            Оставить заявку
+          <Link href="/voprosy" className="text-brand-700 hover:text-brand-800">
+            FAQ →
           </Link>
         </div>
       </section>

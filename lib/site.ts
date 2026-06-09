@@ -9,14 +9,30 @@ export function getSiteUrl(): string {
   return "http://localhost:3000";
 }
 
+function contactFromEnv(key: string, fallback: string): string {
+  const value = process.env[key]?.trim();
+  return value || fallback;
+}
+
 export const siteConfig = {
   name: "CleanPro",
-  phone: "+375 (29) 000-00-00",
-  email: "info@cvirko-vadim.ru",
+  /** Связка бренда с доменом для SEO и AI (entity recognition) */
+  alternateName: "Чистка Минск",
+  domainLabel: "chistkaminsk.ru",
+  description:
+    "Выездная химчистка мебели и ковров на дому в Минске и Минской области: диваны, матрасы, ковровые покрытия, шторы и мягкая мебель.",
+  phone: contactFromEnv("NEXT_PUBLIC_CONTACT_PHONE", "+375 (29) 000-00-00"),
+  email: contactFromEnv("NEXT_PUBLIC_CONTACT_EMAIL", "info@chistkaminsk.ru"),
+  /** Полный адрес для отображения и schema */
   address: "Минск, Беларусь",
+  streetAddress: "Минск",
   region: "Минск",
   country: "BY",
+  geo: { latitude: 53.9045, longitude: 27.5615 },
   openingHours: "Mo-Su 08:00-22:00",
+  priceRange: "от 5 BYN",
+  /** Ссылки на карточки в каталогах — добавьте URL по мере регистрации */
+  sameAs: [] as string[],
 };
 
 export type ServiceItem = {

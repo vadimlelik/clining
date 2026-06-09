@@ -9,17 +9,32 @@ export function ReviewsCarousel() {
   const item = testimonials[active];
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-      <h3 className="text-2xl font-bold text-slate-900">Отзывы клиентов</h3>
-      <div className="mt-4 flex items-center gap-4">
-        <Image src={item.avatar} alt={item.name} width={56} height={56} className="rounded-full bg-slate-100" />
-        <div><p className="font-semibold text-slate-900">{item.name}</p><p className="text-sm text-slate-500">{item.role}</p></div>
+    <div className="card-surface p-6 md:p-8">
+      <div className="flex items-center justify-between gap-4">
+        <h3 className="text-2xl font-extrabold text-slate-900">Отзывы клиентов</h3>
+        <p className="text-amber-500" aria-label={`Оценка ${item.rating} из 5`}>
+          {"★".repeat(item.rating)}
+          <span className="text-slate-300">{"★".repeat(5 - item.rating)}</span>
+        </p>
       </div>
-      <p className="mt-4 text-slate-700">{item.text}</p>
-      <p className="mt-2 text-amber-500">{"★".repeat(item.rating)}</p>
+      <blockquote className="mt-6 text-lg leading-relaxed text-slate-700">&ldquo;{item.text}&rdquo;</blockquote>
+      <div className="mt-6 flex items-center gap-4 border-t border-slate-100 pt-5">
+        <Image src={item.avatar} alt="" width={52} height={52} className="rounded-full bg-brand-50 ring-2 ring-brand-100" />
+        <div>
+          <p className="font-bold text-slate-900">{item.name}</p>
+          <p className="text-sm text-slate-500">{item.role}</p>
+        </div>
+      </div>
       <div className="mt-5 flex gap-2">
         {testimonials.map((_, index) => (
-          <button key={index} type="button" onClick={() => setActive(index)} aria-label={`Показать отзыв ${index + 1}`} className={`h-2.5 w-8 rounded-full ${active === index ? "bg-sky-600" : "bg-slate-300"}`} />
+          <button
+            key={index}
+            type="button"
+            onClick={() => setActive(index)}
+            aria-label={`Показать отзыв ${index + 1}`}
+            aria-current={active === index}
+            className={`h-2 flex-1 rounded-full transition ${active === index ? "bg-brand-600" : "bg-slate-200 hover:bg-brand-200"}`}
+          />
         ))}
       </div>
     </div>
