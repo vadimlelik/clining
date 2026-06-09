@@ -8,6 +8,8 @@ export function AdminPanel() {
   const [items, setItems] = useState<BeforeAfterItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [indexing, setIndexing] = useState(false);
+  const [indexNowMessage, setIndexNowMessage] = useState("");
   const [error, setError] = useState("");
   const [caption, setCaption] = useState("");
 
@@ -59,6 +61,22 @@ export function AdminPanel() {
     }
   }
 
+  async function handleIndexNow() {
+    setIndexing(true);
+    setIndexNowMessage("");
+    setError("");
+    try {
+      const res = await fetch("/api/admin/indexnow", { method: "POST", credentials: "include" });
+      const data = (await res.json()) as { error?: string; submitted?: number };
+      if (!res.ok) throw new Error(data.error ?? "Не удалось отправить уведомление");
+      setIndexNowMessage(`Яндекс уведомлён об ${data.submitted ?? 0} страницах через IndexNow.`);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Ошибка IndexNow");
+    } finally {
+      setIndexing(false);
+    }
+  }
+
   async function handleDelete(id: string) {
     if (!confirm("Удалить эту пару фото?")) return;
     setError("");
@@ -91,6 +109,22 @@ export function AdminPanel() {
           </button>
         </div>
       </div>
+
+      <section className="rounded-2xl border border-sky-100 bg-sky-50 p-6">
+        <h2 className="text-lg font-bold text-slate-900">Индексирование в Яндексе</h2>
+        <p className="mt-2 text-sm text-slate-600">
+          Отправьте все страницы сайта в IndexNow — Яндекс узнает об обновлениях без ожидания очередного обхода. После загрузки фото «до/после» главная уведомляется автоматически.
+        </p>
+        <button
+          type="button"
+          onClick={() => handleIndexNow()}
+          disabled={indexing}
+          className="mt-4 rounded-xl bg-sky-700 px-5 py-3 text-sm font-semibold text-white hover:bg-sky-800 disabled:opacity-60"
+        >
+          {indexing ? "Отправка…" : "Уведомить Яндекс (IndexNow)"}
+        </button>
+        {indexNowMessage ? <p className="mt-3 text-sm text-emerald-700">{indexNowMessage}</p> : null}
+      </section>
 
       <form onSubmit={handleSubmit} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
         <h2 className="text-lg font-bold text-slate-900">Добавить пару «до / после»</h2>

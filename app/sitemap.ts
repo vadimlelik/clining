@@ -1,12 +1,24 @@
 import type { MetadataRoute } from "next";
 import { blogPosts, getSiteUrl, minskDistricts, services } from "@/lib/site";
+import { getSitemapUrls } from "@/lib/sitemap-urls";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = getSiteUrl();
-  const staticRoutes = ["", "/uslugi", "/ceny", "/otzivi", "/blog", "/kontakty", "/voprosy", "/rayony"];
-  const staticItems = staticRoutes.map((route) => ({ url: `${base}${route}`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: route === "" ? 1 : 0.8 }));
-  const serviceItems = services.map((service) => ({ url: `${base}/uslugi/${service.slug}`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.85 }));
-  const districtItems = minskDistricts.map((district) => ({ url: `${base}/rayony/${district.slug}`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.82 }));
-  const blogItems = blogPosts.map((post) => ({ url: `${base}/blog/${post.slug}`, lastModified: new Date(post.date), changeFrequency: "monthly" as const, priority: 0.7 }));
-  return [...staticItems, ...serviceItems, ...districtItems, ...blogItems];
+  const blogDates = new Map(blogPosts.map((post) => [`${base}/blog/${post.slug}`, new Date(post.date)]));
+  const serviceSlugs = new Set(services.map((s) => `${base}/uslugi/${s.slug}`));
+  const districtSlugs = new Set(minskDistricts.map((d) => `${base}/rayony/${d.slug}`));
+
+  return getSitemapUrls().map((url) => {
+    const isHome = url === base || url === `${base}/`;
+    const isBlog = blogDates.has(url);
+    const isService = serviceSlugs.has(url);
+    const isDistrict = districtSlugs.has(url);
+
+    return {
+      url,
+      lastModified: blogDates.get(url) ?? new Date(),
+      changeFrequency: isBlog ? ("monthly" as const) : ("weekly" as const),
+      priority: isHome ? 1 : isService ? 0.85 : isDistrict ? 0.82 : isBlog ? 0.7 : 0.8,
+    };
+  });
 }

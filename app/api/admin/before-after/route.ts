@@ -2,6 +2,12 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { ADMIN_COOKIE, verifyAdminSessionToken } from "@/lib/admin-session";
 import { addBeforeAfterPair, getBeforeAfterItems, removeBeforeAfterItem } from "@/lib/before-after-storage";
+import { submitIndexNow } from "@/lib/indexnow";
+import { getSiteUrl } from "@/lib/site";
+
+function notifyHomepageUpdate() {
+  void submitIndexNow([getSiteUrl()]);
+}
 
 async function assertAdmin() {
   const token = cookies().get(ADMIN_COOKIE)?.value;
@@ -44,6 +50,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: result.error }, { status: 400 });
   }
 
+  notifyHomepageUpdate();
   return NextResponse.json({ ok: true, item: result.item });
 }
 
@@ -61,5 +68,6 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: result.error }, { status: 404 });
   }
 
+  notifyHomepageUpdate();
   return NextResponse.json({ ok: true });
 }
