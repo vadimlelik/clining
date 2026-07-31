@@ -1,14 +1,17 @@
-import type { Metadata } from "next";
-import Script from "next/script";
-import { Manrope } from "next/font/google";
-import "./globals.css";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
-import { SiteJsonLd } from "@/components/site-json-ld";
-import { getSiteUrl, siteConfig } from "@/lib/site";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata } from 'next';
+import Script from 'next/script';
+import { Manrope } from 'next/font/google';
+import './globals.css';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
+import { SiteJsonLd } from '@/components/site-json-ld';
+import { getSiteUrl, siteConfig } from '@/lib/site';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
-const manrope = Manrope({ subsets: ["latin", "cyrillic"], variable: "--font-manrope" });
+const manrope = Manrope({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-manrope',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -21,71 +24,75 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png", sizes: "120x120", type: "image/png" }],
   },
   title: {
-    default: "Выездная химчистка на дому в Минске и Минской области | CleanPro",
-    template: "%s | CleanPro",
+    default: 'Выездная химчистка на дому в Минске и Минской области | CleanPro',
+    template: '%s | CleanPro',
   },
   description:
-    "Выездная химчистка мебели и ковров в Минске и Минской области: химчистка на дому мягкой мебели, диванов, матрасов и ковровых покрытий. Цены с прозрачным прайсом, выезд в день обращения.",
-  alternates: { canonical: "/" },
+    'Выездная химчистка мебели и ковров в Минске и Минской области: химчистка на дому мягкой мебели, диванов, матрасов и ковровых покрытий. Цены с прозрачным прайсом, выезд в день обращения.',
+  alternates: { canonical: '/' },
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
-      "max-image-preview": "large",
-      "max-video-preview": -1,
-      "max-snippet": -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+      'max-snippet': -1,
     },
   },
   openGraph: {
-    title: "Выездная химчистка на дому — Минск и Минская область | CleanPro",
+    title: 'Выездная химчистка на дому — Минск и Минская область | CleanPro',
     description:
-      "Выездная химчистка мебели и ковров на дому в Минске и области: мягкая мебель, диваны, шторы. Фиксированная цена до выезда, безопасная химия.",
+      'Выездная химчистка мебели и ковров на дому в Минске и области: мягкая мебель, диваны, шторы. Фиксированная цена до выезда, безопасная химия.',
     url: getSiteUrl(),
     siteName: siteConfig.name,
-    locale: "ru_RU",
-    type: "website",
+    locale: 'ru_RU',
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Выездная химчистка на дому — Минск и Минская область",
+    card: 'summary_large_image',
+    title: 'Выездная химчистка на дому — Минск и Минская область',
     description:
-      "Химчистка на дому: диваны, матрасы, ковры и шторы. Выездная химчистка по Минску и Минской области с фиксированной ценой.",
+      'Химчистка на дому: диваны, матрасы, ковры и шторы. Выездная химчистка по Минску и Минской области с фиксированной ценой.',
   },
   other: {
-    "geo.region": "BY-HM",
-    "geo.placename": "Минск, Минская область",
+    'geo.region': 'BY-HM',
+    'geo.placename': 'Минск, Минская область',
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru">
-      <body className={`${manrope.variable} font-sans antialiased flex min-h-screen flex-col text-slate-900`}>
+    <html lang='ru'>
+      <body
+        className={`${manrope.variable} font-sans antialiased flex min-h-screen flex-col text-slate-900`}
+      >
         <SiteJsonLd />
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className='flex-1'>{children}</main>
         <Footer />
         <SpeedInsights />
         {/* Yandex.Metrika counter */}
-        <Script id="yandex-metrika" strategy="afterInteractive">
+        <Script id='yandex-metrika' strategy='afterInteractive'>
           {`(function(m,e,t,r,i,k,a){
     m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
     m[i].l=1*new Date();
     for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
     k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109030212', 'ym');
+})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=111187588', 'ym');
 
-ym(109030212, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});`}
+ym(111187588, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});`}
         </Script>
         <noscript>
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element -- пиксель Метрики для пользователей без JS */}
             <img
-              src="https://mc.yandex.ru/watch/109030212"
-              style={{ position: "absolute", left: "-9999px" }}
-              alt=""
+              src='https://mc.yandex.ru/watch/111187588'
+              style={{ position: 'absolute', left: '-9999px' }}
+              alt=''
             />
           </div>
         </noscript>
